@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduPredict AI | Student Performance Analyzer</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Background decoration -->
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+
+        <div class="logo">
+            <div class="logo-icon">✦</div>
+
+            <div>
+                <h2>EduPredict<span> AI</span></h2>
+                <small>Student Intelligence System</small>
+            </div>
+        </div>
+
+        <div class="nav-status">
+            <span class="status-dot"></span>
+            AI Model Online
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN CONTAINER -->
+    <main class="container">
+
+
+        <!-- HERO SECTION -->
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="badge">
+                    <span>✦</span>
+                    AI-Powered Academic Analytics
+                </div>
+
+                <h1>
+                    Understand Your
+                    <span>Academic Future.</span>
+                </h1>
+
+                <p>
+                    Enter your academic and lifestyle details.
+                    Our machine learning model analyzes your profile
+                    and predicts your expected performance with
+                    personalized study recommendations.
+                </p>
+
+            </div>
+
+            <div class="hero-card">
+
+                <div class="mini-icon">🧠</div>
+
+                <div>
+                    <strong>Random Forest AI</strong>
+                    <p>Trained on student performance data</p>
+                </div>
+
+                <div class="accuracy">
+                    <strong>85%</strong>
+                    <small>R² Score</small>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- INPUT CARD -->
+        <section class="form-card">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-number">01</span>
+
+                    <h2>Student Profile</h2>
+
+                    <p>
+                        Tell us about your current academic habits
+                        and performance.
+                    </p>
+                </div>
+
+                <div class="required">
+                    * All fields required
+                </div>
+
+            </div>
+
+
+            <form action="/predict" method="POST">
+
+
+                <!-- ROW 1 -->
+                <div class="input-grid">
+
+
+                    <!-- ATTENDANCE -->
+                    <div class="input-group">
+
+                        <label for="attendance">
+                            <span class="input-icon">📅</span>
+                            Attendance
+                        </label>
+
+                        <div class="input-with-value">
+
+                            <input
+                                type="number"
+                                id="attendance"
+                                name="attendance"
+                                min="0"
+                                max="100"
+                                value="75"
+                                required
+                                oninput="updateValue('attendance', this.value)"
+                            >
+
+                            <span class="unit">%</span>
+
+                        </div>
+
+                        <div class="input-hint">
+                            Percentage of classes attended
+                        </div>
+
+                    </div>
+
+
+                    <!-- STUDY HOURS -->
+                    <div class="input-group">
+
+                        <label for="study_hours">
+                            <span class="input-icon">📚</span>
+                            Daily Study Hours
+                        </label>
+
+                        <div class="input-with-value">
+
+                            <input
+                                type="number"
+                                id="study_hours"
+                                name="study_hours"
+                                min="0"
+                                max="15"
+                                step="0.5"
+                                value="3"
+                                required
+                            >
+
+                            <span class="unit">hrs</span>
+
+                        </div>
+
+                        <div class="input-hint">
+                            Average focused study time per day
+                        </div>
+
+                    </div>
+
+
+                    <!-- PREVIOUS MARKS -->
+                    <div class="input-group">
+
+                        <label for="previous_marks">
+                            <span class="input-icon">📊</span>
+                            Previous Marks
+                        </label>
+
+                        <div class="input-with-value">
+
+                            <input
+                                type="number"
+                                id="previous_marks"
+                                name="previous_marks"
+                                min="0"
+                                max="100"
+                                value="65"
+                                required
+                            >
+
+                            <span class="unit">%</span>
+
+                        </div>
+
+                        <div class="input-hint">
+                            Average marks from previous exams
+                        </div>
+
+                    </div>
+
+
+                    <!-- ASSIGNMENTS -->
+                    <div class="input-group">
+
+                        <label for="assignment_completion">
+                            <span class="input-icon">📝</span>
+                            Assignment Completion
+                        </label>
+
+                        <div class="input-with-value">
+
+                            <input
+                                type="number"
+                                id="assignment_completion"
+                                name="assignment_completion"
+                                min="0"
+                                max="100"
+                                value="75"
+                                required
+                            >
+
+                            <span class="unit">%</span>
+
+                        </div>
+
+                        <div class="input-hint">
+                            Percentage of assignments completed
+                        </div>
+
+                    </div>
+
+
+                    <!-- SLEEP -->
+                    <div class="input-group">
+
+                        <label for="sleep_hours">
+                            <span class="input-icon">🌙</span>
+                            Sleep Hours
+                        </label>
+
+                        <div class="input-with-value">
+
+                            <input
+                                type="number"
+                                id="sleep_hours"
+                                name="sleep_hours"
+                                min="0"
+                                max="15"
+                                step="0.5"
+                                value="7"
+                                required
+                            >
+
+                            <span class="unit">hrs</span>
+
+                        </div>
+
+                        <div class="input-hint">
+                            Average sleep per night
+                        </div>
+
+                    </div>
+
+
+                    <!-- PARTICIPATION -->
+                    <div class="input-group">
+
+                        <label for="participation">
+                            <span class="input-icon">🙋</span>
+                            Class Participation
+                        </label>
+
+                        <div class="input-with-value">
+
+                            <input
+                                type="number"
+                                id="participation"
+                                name="participation"
+                                min="0"
+                                max="100"
+                                value="60"
+                                required
+                            >
+
+                            <span class="unit">%</span>
+
+                        </div>
+
+                        <div class="input-hint">
+                            Participation in classes and discussions
+                        </div>
+
+                    </div>
+
+
+                    <!-- BACKLOGS -->
+                    <div class="input-group">
+
+                        <label for="backlogs">
+                            <span class="input-icon">⚠️</span>
+                            Active Backlogs
+                        </label>
+
+                        <div class="input-with-value">
+
+                            <input
+                                type="number"
+                                id="backlogs"
+                                name="backlogs"
+                                min="0"
+                                max="10"
+                                value="0"
+                                required
+                            >
+
+                            <span class="unit">subjects</span>
+
+                        </div>
+
+                        <div class="input-hint">
+                            Number of currently pending subjects
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- AI NOTICE -->
+                <div class="ai-notice">
+
+                    <div class="notice-icon">✦</div>
+
+                    <div>
+                        <strong>How does EduPredict AI work?</strong>
+
+                        <p>
+                            Your information is processed by a
+                            Random Forest machine learning model.
+                            The system identifies patterns between
+                            academic habits and student performance
+                            to generate your prediction.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <!-- BUTTON -->
+                <button type="submit" class="predict-btn">
+
+                    <span class="btn-icon">✦</span>
+
+                    Analyze My Performance
+
+                    <span class="arrow">→</span>
+
+                </button>
+
+
+                <p class="privacy-note">
+                    🔒 Your data is processed locally by this application
+                    and is not shared with third parties.
+                </p>
+
+
+            </form>
+
+        </section>
+
+
+        <!-- FEATURES -->
+        <section class="features">
+
+            <div class="feature">
+
+                <div class="feature-icon">🤖</div>
+
+                <div>
+                    <h3>Machine Learning</h3>
+                    <p>Random Forest prediction model</p>
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">🎯</div>
+
+                <div>
+                    <h3>Personalized</h3>
+                    <p>Recommendations based on your habits</p>
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">📈</div>
+
+                <div>
+                    <h3>Data Driven</h3>
+                    <p>Multiple academic factors analyzed</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <p>
+            EduPredict AI © 2026
+            <span>•</span>
+            Student Performance Intelligence System
+        </p>
+
+        <p class="college-project">
+            AI/ML Mini Project
+        </p>
+
+    </footer>
+
+
+    <script>
+
+        function updateValue(id, value) {
+            console.log(id + ": " + value);
+        }
+
+
+        // Add small interaction to inputs
+        const inputs = document.querySelectorAll("input");
+
+        inputs.forEach(input => {
+
+            input.addEventListener("focus", function () {
+                this.parentElement.classList.add("active-input");
+            });
+
+            input.addEventListener("blur", function () {
+                this.parentElement.classList.remove("active-input");
+            });
+
+        });
+
+
+        // Prevent accidental negative values
+        inputs.forEach(input => {
+
+            input.addEventListener("input", function () {
+
+                if (this.value < 0) {
+                    this.value = 0;
+                }
+
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
