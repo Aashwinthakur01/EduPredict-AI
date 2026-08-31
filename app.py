@@ -1,3 +1,15 @@
+from flask import Flask, render_template, request
+import pickle
+
+app = Flask(__name__)
+
+# Load model
+model = pickle.load(open('model.pkl', 'rb'))
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
 @app.route('/predict', methods=['POST'])
 def predict():
     attendance = float(request.form.get('attendance', 85))
@@ -8,7 +20,6 @@ def predict():
     participation = float(request.form.get('participation', 6))
     backlogs = float(request.form.get('backlogs', 0))
 
-    # Order must be SAME as CSV: attendance, study_hours, previous_marks, assignment_completion, sleep_hours, participation, backlogs
     features = [[attendance, study_hours, previous_marks, assignment_completion, sleep_hours, participation, backlogs]]
     prediction = model.predict(features)[0]
     prediction = round(float(prediction), 2)
@@ -18,7 +29,7 @@ def predict():
         message = "Outstanding! Keep it up."
     elif prediction >= 70:
         category = "Good Performance"
-        message = "Doing well, minor improvements will help."
+        message = "You're doing well! Small improvements can take you to excellent."
     elif prediction >= 50:
         category = "Average Performance"
         message = "You have potential. Focus on consistency."
@@ -40,3 +51,6 @@ def predict():
         tips.append("🎯 Attendance is low. Try to maintain above 85%.")
 
     return render_template('result.html', prediction=prediction, category=category, message=message, tips=tips)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=10000)
